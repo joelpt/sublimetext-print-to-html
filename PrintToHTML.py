@@ -50,11 +50,9 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
             '<html>',
             '<head>',
             '<title>%s</title>' % filename,
-            '<style>%s</style>' % css,
-            '</head>\n',
-            '<body>',
-            html,
-            '</body>',
+            '<style>', css, '</style>',
+            '</head>',
+            '<body>', html, '</body>',
             '</html>'])
 
         # output
@@ -90,7 +88,7 @@ def get_lexer(filename, syntax, data):
         print syntax
         try:
             lexer = pygments.lexers.get_lexer_by_name(syntax)
-            print 'Guessed lexer from ST2 syntax setting:', lexer
+            print 'Guessed lexer from ST2 sub-syntax setting:', lexer
             return lexer
         except pygments.util.ClassNotFound:
             pass
