@@ -1,0 +1,16 @@
+[
+    {
+        "caption": "Print to HTML: open in browser",
+        "command": "print_to_html",
+        "args": {
+            "target": "browser"
+        }
+    },
+    {
+        "caption": "Print to HTML: open in buffer",
+        "command": "print_to_html",
+        "args": {
+            "target": "sublime"
+        }
+    }
+]
