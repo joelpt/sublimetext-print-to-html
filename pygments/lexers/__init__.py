@@ -18,7 +18,6 @@ from pygments.lexers._mapping import LEXERS
 from pygments.plugin import find_plugin_lexers
 from pygments.util import ClassNotFound, bytes
 
-
 __all__ = ['get_lexer_by_name', 'get_lexer_for_filename', 'find_lexer_class',
            'guess_lexer'] + LEXERS.keys()
 
@@ -227,3 +226,23 @@ newmod = _automodule('pygments.lexers')
 newmod.__dict__.update(oldmod.__dict__)
 sys.modules['pygments.lexers'] = newmod
 del newmod.newmod, newmod.oldmod, newmod.sys, newmod.types
+
+## HACK: We must import these here otherwise ST2 will fail to find them, because
+## normally Pygments imports them only on-demand and therefore ST2 thinks they
+## don't really exist
+import pygments.lexers.agile
+import pygments.lexers.asm
+import pygments.lexers.compiled
+import pygments.lexers.dotnet
+import pygments.lexers.functional
+import pygments.lexers.hdl
+import pygments.lexers.jvm
+import pygments.lexers.math
+import pygments.lexers.other
+import pygments.lexers.parsers
+import pygments.lexers.shell
+import pygments.lexers.special
+import pygments.lexers.sql
+import pygments.lexers.templates
+import pygments.lexers.text
+import pygments.lexers.web

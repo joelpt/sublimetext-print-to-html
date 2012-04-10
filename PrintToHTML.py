@@ -11,14 +11,6 @@ import pygments.formatters
 import pygments.lexers
 
 
-# Pull in built-in plugin directory
-# Apparently this approach is necessary because pygments uses __import__() to selectively import
-# required modules on demand.
-built_in_plugins = os.path.join(sublime.packages_path(), 'Print to HTML')
-if not built_in_plugins in sys.path:
-    sys.path.append(built_in_plugins)
-
-
 class PrintToHtmlCommand(sublime_plugin.TextCommand):
     """Convert current file to HTML and view in browser or ST2 buffer."""
 

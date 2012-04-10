@@ -12,6 +12,11 @@
 from pygments.plugin import find_plugin_styles
 from pygments.util import ClassNotFound
 
+## HACK: We must import this here otherwise ST2 will fail to find it, because
+## normally Pygments imports them only on-demand and therefore ST2 thinks they
+## don't really exist
+import pygments.styles.default
+
 #: Maps style names to 'submodule::classname'.
 STYLE_MAP = {
     'default':  'default::DefaultStyle',
