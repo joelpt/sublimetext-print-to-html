@@ -52,7 +52,9 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
             '<title>%s</title>' % filename,
             '<style>', css, '</style>',
             '</head>',
-            '<body>', html, '</body>',
+            '<body%s>' % ('onload="window.print()"' if target == 'browser' else ''),
+            html,
+            '</body>',
             '</html>'])
 
         # output
