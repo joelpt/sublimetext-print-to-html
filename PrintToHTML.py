@@ -82,7 +82,7 @@ def get_lexer(filename, syntax, data):
     except pygments.util.ClassNotFound:
         pass
 
-    # look for a lexer based on the ST2 sub-syntax name, e.g. Django in HTML (Django)
+    # look for a lexer based on the ST2 sub-syntax name, e.g. 'Django' in 'HTML (Django)'
     if '(' in syntax:
         syntax = re.sub(r'.+\((.+)\)', r'\1', syntax)
         print syntax
