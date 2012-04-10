@@ -3,7 +3,7 @@
         "id": "file",
         "children":
         [
-            { "command": "print_to_html", "args": { "target": "browser" }, "caption": "Print as HTML to Browser" },
+            { "command": "print_to_html", "args": { "target": "browser" }, "caption": "Print as HTML via Browser" },
             { "command": "print_to_html", "args": { "target": "sublime" }, "caption": "Print as HTML to New Buffer" }
         ]
     }

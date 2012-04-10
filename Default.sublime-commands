@@ -1,13 +1,13 @@
 [
     {
-        "caption": "Print to HTML: open in browser",
+        "caption": "Print to HTML: print as HTML via browser",
         "command": "print_to_html",
         "args": {
             "target": "browser"
         }
     },
     {
-        "caption": "Print to HTML: open in buffer",
+        "caption": "Print to HTML: print as HTML to new buffer",
         "command": "print_to_html",
         "args": {
             "target": "sublime"
