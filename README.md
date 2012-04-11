@@ -7,27 +7,27 @@ Colorization and HTML conversion is currently performed by [Pygments][0], which 
 
 **Installation:**
 
- - Install [Package Manager][2].
- - Use `cmd+shift+P` or `ctrl+shift+P` then `Package Control: Install Package`.
- - Look for `Print to HTML` and install it.
+ * Install [Package Manager][2].
+ * Use `cmd+shift+P` or `ctrl+shift+P` then `Package Control: Install Package`.
+ * Look for `Print to HTML` and install it.
 
 **Usage:**
 
- - For best results, save your file with an appropriate extension beforehand.
- - To print the current file:
-    - use `shift+alt+P` to print current file as HTML via your browser, or
-    - from File menu, use `Print as HTML to Browser` or `Print as HTML to New Buffer`.
- - Edit settings in `Preferences->Package Settings->Print in HTML` to customize output formatting and behavior.
+ * For best results, save your file with an appropriate extension beforehand.
+ * To print the current file:
+   * use `shift+alt+P` to print current file as HTML via your browser, or
+   * from File menu, use `Print as HTML to Browser` or `Print as HTML to New Buffer`.
+ * Edit settings in `Preferences->Package Settings->Print in HTML` to customize output formatting and behavior.
 
 **Uses:**
 
- - [Pygments][0] for code-to-HTML conversion
+ * [Pygments][0] for code-to-HTML conversion
 
 **Future goals:**
 
- - Use ST2's internal scope and color data from a buffer to produce an exact replica of a file from ST2 in HTML form. The current approach using Pygments has limitations regarding formats unknown by Pygments (e.g. Markdown) and documents with mixed syntaxes (e.g. PHP embedded in HTML).
- - Support different color schemes.
- - Only print current selection(s) OR print selected text with a highlighted background.
+ * Use ST2's internal scope and color data from a buffer to produce an exact replica of a file from ST2 in HTML form. The current approach using Pygments has limitations regarding formats unknown by Pygments (e.g. Markdown) and documents with mixed syntaxes (e.g. PHP embedded in HTML).
+ * Support different color schemes.
+ * Only print current selection(s) OR print selected text with a highlighted background.
 
 This code is available on [Github][1]. Pull requests are welcome.
 
