@@ -16,6 +16,8 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
 
     def run(self, edit, target='browser'):
 
+        settings = sublime.load_settings('Print to HTML.sublime-settings')
+
         # get the text to be converted and the buffer's filename
         region = sublime.Region(0, self.view.size())
         text = self.view.substr(region)
@@ -36,6 +38,19 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
         html, css = convert_to_html(filename, text, syntax, encoding)
 
         # build the html
+        if target == 'browser':
+            onload = ' onload="'
+            if settings.get('auto_print_in_browser'):
+                onload += 'window.print();'
+                if settings.get('auto_close_in_browser'):
+                    onload += 'window.close();'
+            onload += '"'
+        else:
+            onload = ''
+
+        if settings.get('monochrome'):
+            css += '\n.highlight * { color: black !important }\n.highlight .err { border: 1px solid black !important }'
+
         html_contents = '\n'.join([
             '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">',
             '<meta charset="%s">' % encoding,
@@ -44,7 +59,7 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
             '<title>%s</title>' % filename,
             '<style>', css, '</style>',
             '</head>',
-            '<body%s>' % (' onload="window.print()"' if target == 'browser' else ''),
+            '<body%s>' % onload,
             html,
             '</body>',
             '</html>'])

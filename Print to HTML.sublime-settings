@@ -1,0 +1,10 @@
+{
+    // If true, automatically open browser's Print dialog when using Print as HTML via Browser
+    "auto_print_in_browser" : true,
+
+    // If true, automatically close page in browser after Print dialog (when auto_print_in_browser=true)
+    "auto_close_in_browser" : false,
+
+    // If true, exclude any color information from generated HTML (just black text on white)
+    "monochrome" : false
+}
