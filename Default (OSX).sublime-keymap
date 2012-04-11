@@ -1,0 +1,3 @@
+[
+    { "keys": ["shift+alt+p"], "command": "print_to_html", "args": { "target": "browser" } }
+]
