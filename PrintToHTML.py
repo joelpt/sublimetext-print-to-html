@@ -112,7 +112,6 @@ def convert_to_html(filename, data, syntax, encoding):
     formatter = pygments.formatters.HtmlFormatter(
         linenos='inline',
         encoding=encoding,
-        nobackground=True,
-        lineanchors='line')
+        nobackground=True)
     lexer = get_lexer(filename, syntax, data)
     return convert_with_pygments(lexer, formatter, data)
