@@ -8,14 +8,14 @@ Colorization and HTML conversion is currently performed by [Pygments][0], which 
 **Installation:**
 
  * Install [Package Manager][2].
- * Use `cmd+shift+P` or `ctrl+shift+P` then `Package Control: Install Package`.
+ * Use `Cmd+Shift+P` or `Ctrl+Shift+P` then `Package Control: Install Package`.
  * Look for `Print to HTML` and install it.
 
 **Usage:**
 
  * For best results, save your file with an appropriate extension beforehand.
  * To print the current file:
-   * use `shift+alt+P` to print current file as HTML via your browser, or
+   * use `Shift+Alt+P` to print current file as HTML via your browser, or
    * from File menu, use `Print as HTML to Browser` or `Print as HTML to New Buffer`.
  * Edit settings in `Preferences->Package Settings->Print in HTML` to customize output formatting and behavior.
 
@@ -31,6 +31,7 @@ Colorization and HTML conversion is currently performed by [Pygments][0], which 
 
 This code is available on [Github][1]. Pull requests are welcome.
 
+Created by Joel Thornton <sublime@joelpt.net>
 
  [0]: http://pygments.org/
  [1]: https://github.com/joelpt/sublimetext-print-to-html
