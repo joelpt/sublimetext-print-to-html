@@ -16,7 +16,7 @@ Colorization and HTML conversion is currently performed by [Pygments][0], which 
  - For best results, save your file with an appropriate extension beforehand.
  - Use `shift+alt+P` to print current file as HTML and open in your browser, or
  - From File menu, use `Print as HTML to Browser` or `Print as HTML to New Buffer`.
- - View the settings in `Preferences->Package Settings->Print in HTML` for further options.
+ - Modify settings in `Preferences->Package Settings->Print in HTML` to control output format and behavior.
 
 **Uses:**
 
@@ -25,7 +25,6 @@ Colorization and HTML conversion is currently performed by [Pygments][0], which 
 **Future goals:**
 
  - Use ST2's internal scope and color data from a buffer to produce an exact replica of a file from ST2 in HTML form. The current approach using Pygments has limitations regarding formats unknown by Pygments (e.g. Markdown) and documents with mixed syntaxes (e.g. PHP embedded in HTML).
- - Add options for toggling line-numbering output, embedding HTML A anchors for each line, et al.
  - Support different color schemes.
  - Only print current selection(s) OR print selected text with a highlighted background.
 
