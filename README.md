@@ -27,6 +27,8 @@ Colorization and HTML conversion is currently performed by [Pygments][0], which 
  - Add options for toggling line-numbering output, embedding HTML A anchors for each line, et al.
  - Support different color schemes.
  - Only print current selection(s) OR print selected text with a highlighted background.
+ - Add option to print black and white (do not colorize).
+ - Add option to window.close() after calling window.print() within browser.
 
 This code is available on [Github][1]. Pull requests are welcome.
 
