@@ -14,8 +14,9 @@ Colorization and HTML conversion is currently performed by [Pygments][0], which 
 **Usage:**
 
  - For best results, save your file with an appropriate extension beforehand.
- - Use `shift+alt+P` to print current file as HTML and open in your browser, or
- - From File menu, use `Print as HTML to Browser` or `Print as HTML to New Buffer`.
+ - To print the current file:
+    - use `shift+alt+P` to print current file as HTML via your browser, or
+    - from File menu, use `Print as HTML to Browser` or `Print as HTML to New Buffer`.
  - Edit settings in `Preferences->Package Settings->Print in HTML` to customize output formatting and behavior.
 
 **Uses:**
