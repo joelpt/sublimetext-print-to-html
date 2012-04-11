@@ -3,6 +3,7 @@ import sublime_plugin
 import desktop
 import tempfile
 import re
+import sys
 
 import pygments
 import pygments.formatters
@@ -27,7 +28,11 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
         elif encoding == 'Western (Windows 1252)':
             encoding = 'windows-1252'
 
-        # determine buffer's syntax name, to be used as a hint for choosing a lexer
+        # turn tabs into spaces per view's setting to ensure proper indentation
+        spaces = ' ' * int(self.view.settings().get('tab_size', 8))
+        text = re.sub(r'\t', spaces, text)
+
+        # get buffer's syntax name, to be used as a hint for choosing a lexer
         syntax = self.view.settings().get('syntax')
         syntax = re.sub(r'.+/(.+).tmLanguage', r'\1', syntax).lower()
 
@@ -38,7 +43,7 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
         # perform the conversion to HTML
         body, css = convert_to_html(filename, text, syntax, encoding, options)
 
-        # construct onload body attribute for automatic printing/closing within browser
+        # construct onload body attrib for print/close JS within browser
         if target == 'browser':
             onload = ' onload="'
             if settings.get('auto_print_in_browser', False):
@@ -73,18 +78,20 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
 
 def construct_html_document(encoding, title, css, body, body_attribs):
     """Populate simple boilerplate HTML with given arguments."""
-    return '\n'.join([
-        '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">',
-        '<meta charset="%s">' % encoding,
-        '<html>',
-        '<head>',
-        '<title>%s</title>' % title,
-        '<style>', css, '</style>',
-        '</head>',
-        '<body%s>' % body_attribs,
+    return u'\n'.join([
+        u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">',
+        u'<meta charset="%s">' % encoding,
+        u'<html>',
+        u'<head>',
+        u'<title>%s</title>' % title,
+        u'<style>',
+        css,
+        u'</style>',
+        u'</head>',
+        u'<body%s>' % body_attribs,
         body,
-        '</body>',
-        '</html>'])
+        u'</body>',
+        u'</html>'])
 
 
 def send_to_browser(html):
