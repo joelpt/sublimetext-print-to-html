@@ -34,7 +34,7 @@ If you prefer to install manually, install git, then:
 
 This code is available on [Github][1]. Pull requests are welcome.
 
-Created by [Joel Thornton[4]. 
+Created by [Joel Thornton][4]. 
 
 Uses the [Pygments][0] library (included) for code-to-HTML conversion.
 
