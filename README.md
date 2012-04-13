@@ -18,9 +18,10 @@ If you prefer to install manually, install git, then:
 ## Usage
 
  * For best results, save your file with an appropriate extension beforehand.
- * To print the current file:
+ * To print the current file, use one of the following methods:
    * use `Shift+Alt+P` to print current file as HTML via your browser, or
    * from File menu, use `Print as HTML to Browser` or `Print as HTML to New Buffer`.
+   * press `Ctrl+Shift+P` or `Cmd+Shift+P` then type `print`.
  * Edit settings in `Preferences->Package Settings->Print in HTML` to customize output formatting and behavior.
 
 ## Future goals
