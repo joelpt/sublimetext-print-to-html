@@ -78,6 +78,7 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
 
 def construct_html_document(encoding, title, css, body, body_attribs):
     """Populate simple boilerplate HTML with given arguments."""
+    body = unicode(body, errors='ignore')  # ignore badly encoded characters in files
     return u'\n'.join([
         u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">',
         u'<meta charset="%s">' % encoding,
