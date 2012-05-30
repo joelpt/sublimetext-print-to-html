@@ -1,9 +1,10 @@
+# coding=utf8
+
 import sublime
 import sublime_plugin
 import desktop
 import tempfile
 import re
-import sys
 
 import pygments
 import pygments.formatters
@@ -78,21 +79,22 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
 
 def construct_html_document(encoding, title, css, body, body_attribs):
     """Populate simple boilerplate HTML with given arguments."""
-    body = unicode(body, errors='ignore')  # ignore badly encoded characters in files
-    return u'\n'.join([
-        u'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">',
-        u'<meta charset="%s">' % encoding,
-        u'<html>',
-        u'<head>',
-        u'<title>%s</title>' % title,
-        u'<style>',
+    body = body.decode('utf-8').encode('ascii', 'xmlcharrefreplace')
+    output = '\n'.join([
+        '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">',
+        '<meta charset="%s">' % encoding,
+        '<html>',
+        '<head>',
+        '<title>%s</title>' % title,
+        '<style>',
         css,
-        u'</style>',
-        u'</head>',
-        u'<body%s>' % body_attribs,
+        '</style>',
+        '</head>',
+        '<body%s>' % body_attribs,
         body,
-        u'</body>',
-        u'</html>'])
+        '</body>',
+        '</html>'])
+    return output
 
 
 def send_to_browser(html):
