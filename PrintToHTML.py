@@ -61,9 +61,18 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
                 '.highlight * { color: black !important }',
                 '.highlight .err { border: 1px solid black !important }'])
 
+        # set font size
+        fontsize = settings.get('font_size', None)
+        if fontsize:
+            css += '\n.highlight { font-size: %s; }' % settings.get('font_size')
+
         # hide Pygments error borders unless requested to show
         if not settings.get('draw_error_borders', False):
             css += '\n.highlight .err { border: none !important }'
+
+        # wrap long lines if requested
+        if settings.get('word_wrap', False):
+            css += '\n.highlight > pre { width: 100%; word-wrap: break-word; }'
 
         # prepare html for final output
         html = construct_html_document(encoding, filename, css, body, onload)
