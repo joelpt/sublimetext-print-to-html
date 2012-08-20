@@ -8,10 +8,17 @@
     // If true, do not use colors in generated HTML (just black text on white)
     "monochrome" : false,
 
+    // Set the font used (CSS font-family syntax)
+    // "font": "'Lucida Console'",
+    "font": "monospace",
+
     // Set the font size displayed in the browser
     // CSS units: em, px, pt, %
     // 1em = 12pt = 16px = 100%
     "font_size": "100%",
+
+    // Set the height of each line; increase if the lines look too packed together
+    "line_height": "1.0em",
 
     // If true, long lines will be wrapped onto multiple lines
     // If false, let the browser decide how to handle long lines

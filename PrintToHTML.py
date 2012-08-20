@@ -61,10 +61,17 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
                 '.highlight * { color: black !important }',
                 '.highlight .err { border: 1px solid black !important }'])
 
+        # set font family
+        if settings.get('font', False):
+            css += '\n.highlight * { font-family: %s; }' % settings.get('font')
+
         # set font size
-        fontsize = settings.get('font_size', None)
-        if fontsize:
+        if settings.get('font_size', None):
             css += '\n.highlight { font-size: %s; }' % settings.get('font_size')
+
+        # set line height
+        if settings.get('line_height', None):
+            css += '\n.highlight { line-height: %s; }' % settings.get('line_height')
 
         # hide Pygments error borders unless requested to show
         if not settings.get('draw_error_borders', False):
