@@ -58,12 +58,12 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
         # force black and white styling if monochrome setting is on
         if settings.get('monochrome', False):
             css += '\n'.join(['',
-                '.highlight * { color: black !important }',
-                '.highlight .err { border: 1px solid black !important }'])
+                '.highlight * { color: black !important; }',
+                '.highlight .err { border: 1px solid black !important; }'])
 
         # set font family
-        if settings.get('font', False):
-            css += '\n.highlight * { font-family: %s; }' % settings.get('font')
+        if settings.get('font_face', None):
+            css += '\n.highlight * { font-family: %s; }' % settings.get('font_face')
 
         # set font size
         if settings.get('font_size', None):
@@ -80,6 +80,10 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
         # wrap long lines if requested
         if settings.get('word_wrap', False):
             css += '\n.highlight > pre { width: 100%; word-wrap: break-word; }'
+
+        # add custom css
+        if settings.get('custom_css', None):
+            css += '\n' + settings.get('custom_css')
 
         # prepare html for final output
         html = construct_html_document(encoding, filename, css, body, onload)
