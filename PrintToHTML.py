@@ -17,9 +17,22 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
     def run(self, edit, target='browser'):
         settings = sublime.load_settings('Print to HTML.sublime-settings')
 
-        # get the text to be converted and the buffer's filename
-        region = sublime.Region(0, self.view.size())
-        text = self.view.substr(region)
+        # get the selected text or the full text, based on whether regions are selected
+        selections = self.view.sel()
+
+        if text_selected(selections):
+            texts = []
+
+            for selection in selections:
+                # start/end at start/end of selected line
+                region = self.view.line(sublime.Region(selection.a, selection.b))
+                texts.append([self.view.rowcol(region.a)[0] + 1, self.view.substr(region)])
+
+        else:
+            region = sublime.Region(0, self.view.size())
+            texts = [[1, self.view.substr(region)]]
+
+        # get the buffer's filename
         filename = self.view.file_name()
 
         # determine output encoding
@@ -31,7 +44,8 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
 
         # turn tabs into spaces per view's setting to ensure proper indentation
         spaces = ' ' * int(self.view.settings().get('tab_size', 8))
-        text = re.sub(r'\t', spaces, text)
+        for i in range(len(texts)):
+            texts[i][1] = re.sub(r'\t', spaces, texts[i][1])
 
         # get buffer's syntax name, to be used as a hint for choosing a lexer
         syntax = self.view.settings().get('syntax')
@@ -42,7 +56,7 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
         options = dict(map(lambda x: (x, settings.get(x, False)), optlist))
 
         # perform the conversion to HTML
-        body, css = convert_to_html(filename, text, syntax, encoding, options)
+        css, texts = convert_to_html(filename, texts, syntax, encoding, options)
 
         # construct onload body attrib for print/close JS within browser
         if target == 'browser':
@@ -86,7 +100,7 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
             css += '\n' + settings.get('custom_css')
 
         # prepare html for final output
-        html = construct_html_document(encoding, filename, css, body, onload)
+        html = construct_html_document(encoding, filename, css, texts, onload)
 
         # show html in browser or new buffer
         if target == 'browser':
@@ -97,9 +111,9 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
             raise Exception('Unsupported arg "target"')
 
 
-def construct_html_document(encoding, title, css, body, body_attribs):
+def construct_html_document(encoding, title, css, texts, body_attribs):
     """Populate simple boilerplate HTML with given arguments."""
-    body = body.decode('utf-8').encode('ascii', 'xmlcharrefreplace')
+    body = '\n'.join(texts).decode('utf-8').encode('ascii', 'xmlcharrefreplace')
     output = '\n'.join([
         '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">',
         '<meta charset="%s">' % encoding,
@@ -175,19 +189,28 @@ def get_lexer(filename, syntax, text):
     return lexer
 
 
-def convert_with_pygments(lexer, formatter, text):
-    """Use Pygments to convert text using provided lexer and formatter."""
-    html = pygments.highlight(text, lexer, formatter)
-    css = formatter.get_style_defs('.highlight')
-    return html, css
-
-
-def convert_to_html(filename, text, syntax, encoding, options):
+def convert_to_html(filename, texts, syntax, encoding, options):
     """Convert text to HTML form, using filename and syntax as lexer hints."""
     formatter = pygments.formatters.HtmlFormatter(
         encoding=encoding,
         linenos='inline' if options['line_numbering'] else False,
         nobackground=not options['draw_background'],
         lineanchors='line' if options['line_anchors'] else False)
-    lexer = get_lexer(filename, syntax, text)
-    return convert_with_pygments(lexer, formatter, text)
+
+    css = formatter.get_style_defs('.highlight')
+    texts_out = []
+    for text in texts:
+        lexer = get_lexer(filename, syntax, text[1])
+        formatter.linenostart = text[0]  # line number for each block
+        html = pygments.highlight(text[1], lexer, formatter)
+        texts_out.append(html)
+
+    return css, texts_out
+
+
+def text_selected(selections):
+    """Return whether or not any text is selected"""
+    for selection in selections:
+        if selection.a != selection.b:
+            return True
+    return False
