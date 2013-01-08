@@ -26,7 +26,13 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
             for selection in selections:
                 # start/end at start/end of selected line
                 region = self.view.line(sublime.Region(selection.a, selection.b))
-                texts.append([self.view.rowcol(region.a)[0] + 1, self.view.substr(region)])
+
+                # check for previous selection's bounds, add together if they overlap
+                if len(texts) > 0 and (texts[-1][2].b >= region.a):
+                    new_region = sublime.Region(texts[-1][2].a, region.b)
+                    texts[-1] = [texts[-1][0], self.view.substr(new_region), new_region]
+                else:
+                    texts.append([self.view.rowcol(region.a)[0] + 1, self.view.substr(region), region])
 
         else:
             region = sublime.Region(0, self.view.size())
