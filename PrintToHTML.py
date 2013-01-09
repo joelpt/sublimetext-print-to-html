@@ -61,8 +61,11 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
         optlist = ['line_numbering', 'draw_background', 'line_anchors']
         options = dict(map(lambda x: (x, settings.get(x, False)), optlist))
 
+        # style
+        style = settings.get('style', 'default')
+
         # perform the conversion to HTML
-        css, texts = convert_to_html(filename, texts, syntax, encoding, options)
+        css, texts = convert_to_html(filename, texts, syntax, encoding, options, style)
 
         # construct onload body attrib for print/close JS within browser
         if target == 'browser':
@@ -195,13 +198,14 @@ def get_lexer(filename, syntax, text):
     return lexer
 
 
-def convert_to_html(filename, texts, syntax, encoding, options):
+def convert_to_html(filename, texts, syntax, encoding, options, style):
     """Convert text to HTML form, using filename and syntax as lexer hints."""
     formatter = pygments.formatters.HtmlFormatter(
         encoding=encoding,
         linenos='inline' if options['line_numbering'] else False,
         nobackground=not options['draw_background'],
-        lineanchors='line' if options['line_anchors'] else False)
+        lineanchors='line' if options['line_anchors'] else False,
+        style=style)
 
     css = formatter.get_style_defs('.highlight')
     texts_out = []
