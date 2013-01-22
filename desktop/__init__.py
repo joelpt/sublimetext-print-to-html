@@ -157,6 +157,8 @@ def get_desktop():
     if os.environ.has_key("KDE_FULL_SESSION") or \
         os.environ.has_key("KDE_MULTIHEAD"):
         return "KDE"
+    elif os.environ.get("XDG_CURRENT_DESKTOP").lower() == "unity":
+        return "Unity"
     elif os.environ.has_key("GNOME_DESKTOP_SESSION_ID") or \
         os.environ.has_key("GNOME_KEYRING_SOCKET"):
         return "GNOME"
@@ -198,6 +200,8 @@ def use_desktop(desktop):
 
     elif (desktop or detected) == "KDE":
         return "KDE"
+    elif (desktop or detected) == "Unity":
+        return "Unity"
     elif (desktop or detected) == "GNOME":
         return "GNOME"
     elif (desktop or detected) == "XFCE":
@@ -258,6 +262,9 @@ def open(url, desktop=None, wait=0):
 
     elif desktop_in_use == "KDE":
         cmd = ["kfmclient", "exec", url]
+
+    elif desktop_in_use == "Unity":
+        cmd = ["xdg-open", url]
 
     elif desktop_in_use == "GNOME":
         cmd = ["gnome-open", url]
