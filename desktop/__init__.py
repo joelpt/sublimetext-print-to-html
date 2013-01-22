@@ -157,7 +157,8 @@ def get_desktop():
     if os.environ.has_key("KDE_FULL_SESSION") or \
         os.environ.has_key("KDE_MULTIHEAD"):
         return "KDE"
-    elif os.environ.get("XDG_CURRENT_DESKTOP").lower() == "unity":
+    elif os.environ.has_key("XDG_CURRENT_DESKTOP") and \
+        os.environ.get("XDG_CURRENT_DESKTOP").lower() == "unity":
         return "Unity"
     elif os.environ.has_key("GNOME_DESKTOP_SESSION_ID") or \
         os.environ.has_key("GNOME_KEYRING_SOCKET"):
