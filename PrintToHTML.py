@@ -5,6 +5,7 @@ import sublime_plugin
 import desktop
 import tempfile
 import re
+import textwrap
 
 import pygments
 import pygments.formatters
@@ -102,7 +103,60 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
 
         # wrap long lines if requested
         if settings.get('word_wrap', False):
-            css += '\n.highlight > pre { width: 100%; word-wrap: break-word; }'
+            # default css word wrap
+            css += '\n.highlight > pre { word-wrap: break-word; white-space: pre-wrap; }'
+
+            # javascript procedure left-aligns wrapped lines to the right edge of line-numbering columns
+            js = textwrap.dedent("""\
+                <script>
+                var rewrapped = false;
+
+                // One of these methods should work for a given browser
+                document.addEventListener('DOMContentLoaded', rewrapAllCodeBlocks, false);
+                window.addEventListener('load', rewrapAllCodeBlocks, false);
+                rewrapAllCodeBlocks();
+
+                // Apply css to word-wrap and indent all the lines of code in each div.highlight code block
+                function rewrapAllCodeBlocks(force) {
+                    if (rewrapped && !force) {
+                        return;
+                    }
+                    var blocks = document.getElementsByClassName('highlight');
+                    for (var i = 0; i < blocks.length; i++) {
+                        rewrapCodeBlock(blocks[i]);
+                    }
+                    rewrapped = true;
+                }
+
+                // Apply css to indent wrapped lines
+                function rewrapCodeBlock(block) {
+                    var lineNums = block.querySelectorAll('.lineno');
+                    if (lineNums.length == 0) {
+                        return;
+                    }
+
+                    // Calculate actual width of a character in the line numbers column
+                    var first = lineNums[0];
+                    var text = first.innerText || first.textContent;
+                    var charWidth = first.offsetWidth / text.length;
+
+                    // Adjustment width is width of line number column plus 1 more character-width
+                    // for the trailing space that comes after the span.lineno element
+                    var adjustWidth = charWidth * (text.length + 1);
+
+                    // Indent the entire block by adjustWidth ...
+                    block.firstChild.style.marginLeft = adjustWidth + 'px';
+
+                    // ... and correspondingly de-indent just the starting line-number <span> of
+                    // each line-of-code, resulting in only wrapped lines of code being indented
+                    // past the column of line numbers
+                    for (var i = 0; i < lineNums.length; i++) {
+                        lineNums[i].style.marginLeft = -adjustWidth + 'px';
+                    }
+                }
+                </script>
+            """)
+            texts += [js]
 
         # add custom css
         if settings.get('custom_css', None):
