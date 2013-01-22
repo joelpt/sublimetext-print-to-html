@@ -37,6 +37,10 @@
     // If true, draw a light grey background behind code (probably not ideal for printing)
     "draw_background": false,
 
+    // Style to use when formatting text
+    // Avaliable styles can be found under <Package Folder>/pygments/styles
+    "style": "default",
+
     // Use this to add custom CSS rules to the output; note that using "monochrome": true may
     // override color-related custom CSS styling used here
     // "custom_css": "body { background-color: black; } .highlight * { color: white; }"
