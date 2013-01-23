@@ -111,7 +111,7 @@ class PrintToHtmlCommand(sublime_plugin.TextCommand):
             # use JS in browser to indent wrapped lines past edge of line-number column
             texts += [WORD_WRAP_SCRIPT_BLOCK]
 
-            if settings.get('word_wrap_break_words', False):
+            if settings.get('word_wrap_break_anywhere', False):
                 # permit browser to wrap anywhere, not just between words
                 css += '\n.highlight > pre { word-break: break-all; }'
 

@@ -25,10 +25,10 @@
     // If false, let the browser decide how to handle long lines
     "word_wrap": true,
 
-    // If true, allow the browser to split words in half in order to wrap long lines.
-    // If false, only allow browser to split long lines between words.
+    // If true, allow the browser to wrap long lines at any character.
+    // If false, only allow the browser to wrap long lines between complete words.
     // Has no effect when word_wrap is false.
-    "word_wrap_break_words": false,
+    "word_wrap_break_anywhere": false,
 
     // If true, output line numbers to the left of the code
     "line_numbering": true,
