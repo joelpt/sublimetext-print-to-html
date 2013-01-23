@@ -1,27 +1,22 @@
 // Indent wrapped lines in order to keep them out of the line-numbering column.
 
-var rewrapped = false;  // Set to true after we wrap to prevent running the routine twice
+// One of these methods should work for a given browser; though this means
+// possibly running the hangingIndent routine 3 times it also ensures we successfully
+// wrap all code blocks all the time
+document.addEventListener('DOMContentLoaded', hangingIndentAllCodeBlocks, false);
+window.addEventListener('load', hangingIndentAllCodeBlocks, false);
+hangingIndentAllCodeBlocks();
 
-// One of these methods should work for a given browser
-document.addEventListener('DOMContentLoaded', rewrapAllCodeBlocks, false);
-window.addEventListener('load', rewrapAllCodeBlocks, false);
-rewrapAllCodeBlocks();
-
-// Apply css to word-wrap and indent all the lines of code in each div.highlight code block
-function rewrapAllCodeBlocks(force) {
-    if (rewrapped && !force) {
-        // Only rewrap one time unless force=true
-        return;
-    }
+// Apply css to apply hanging indent for wrapped lines in each div.highlight code block
+function hangingIndentAllCodeBlocks() {
     var blocks = document.getElementsByClassName('highlight');
     for (var i = 0; i < blocks.length; i++) {
-        rewrapCodeBlock(blocks[i]);
+        hangingIndentCodeBlock(blocks[i]);
     }
-    rewrapped = true;
 }
 
-// Apply css to indent wrapped lines
-function rewrapCodeBlock(block) {
+// Apply css to indent wrapped lines with a hanging indent
+function hangingIndentCodeBlock(block) {
     var lineNums = block.querySelectorAll('.lineno');
     if (lineNums.length == 0) {
         return;
