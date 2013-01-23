@@ -15,7 +15,7 @@
     // Set the font size displayed in the browser
     // CSS units: em, px, pt, %
     // 1em = 12pt = 16px = 100%
-    "font_size": "100%",
+    "font_size": "90%",
 
     // Set the height of each line; increase if the lines look too packed together
     // "line_height": "1.25em",
@@ -23,7 +23,7 @@
 
     // If true, long lines will be wrapped onto multiple lines
     // If false, let the browser decide how to handle long lines
-    "word_wrap": false,
+    "word_wrap": true,
 
     // If true, output line numbers to the left of the code
     "line_numbering": true,
