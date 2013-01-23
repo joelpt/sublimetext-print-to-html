@@ -1,13 +1,13 @@
 // Indent wrapped lines in order to keep them out of the line-numbering column.
 
 // One of these methods should work for a given browser; though this means
-// possibly running the hangingIndent routine 3 times it also ensures we successfully
-// wrap all code blocks all the time
+// possibly running the hangingIndent routine 3 times, it also ensures we successfully
+// wrap all code blocks, all the time, on all tested browsers.
 document.addEventListener('DOMContentLoaded', hangingIndentAllCodeBlocks, false);
 window.addEventListener('load', hangingIndentAllCodeBlocks, false);
 hangingIndentAllCodeBlocks();
 
-// Apply css to apply hanging indent for wrapped lines in each div.highlight code block
+// Apply hanging indent CSS to wrapped lines in each div.highlight code block
 function hangingIndentAllCodeBlocks() {
     var blocks = document.getElementsByClassName('highlight');
     for (var i = 0; i < blocks.length; i++) {
@@ -15,7 +15,7 @@ function hangingIndentAllCodeBlocks() {
     }
 }
 
-// Apply css to indent wrapped lines with a hanging indent
+// Apply hanging indent CSS to wrapped lines in given block
 function hangingIndentCodeBlock(block) {
     var lineNums = block.querySelectorAll('.lineno');
     if (lineNums.length == 0) {
